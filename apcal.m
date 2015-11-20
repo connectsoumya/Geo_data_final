@@ -40,7 +40,7 @@ if size(M,2)==0
     IMPATH.RESULT{labelvalue,1}={};
 else
     for i=1:size(M,2)
-        imnum = mod(M(3,i),100);
+        imnum = mod(M(3,i),100)+1;
         IMPATH.RESULT{labelvalue,i}=showpath(labelvalue,imnum);
     end
 end

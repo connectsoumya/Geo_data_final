@@ -3,11 +3,12 @@ clear;
 load('RefSamplesSIFT.mat')
 load('RefSamplesLabelsSIFT.mat')
 
-% for i=1:size(RefSamplesSIFT,1)
-%     RefSamplesSIFT(i,:)=RefSamplesSIFT(i,:)./norm(RefSamplesSIFT(i,:));
-% end
-
 format long
+
+for i=1:size(RefSamplesSIFT,1)
+    RefSamplesSIFT(i,:)=RefSamplesSIFT(i,:)./sum(RefSamplesSIFT(i,:));
+end
+% 
 X=mean(RefSamplesSIFT);
 for i=1:size(RefSamplesSIFT,1)
     RefSamplesSIFT(i,:)=RefSamplesSIFT(i,:)-X;
@@ -15,7 +16,8 @@ end
 
 count=1;
 testim_no=1;
-for j=[1 6 7 8 9 10]
+ip_image_no = 6:3:90;%[41 56 67 78 89 90];
+for j = ip_image_no
     
     MNIST_trndata=[];
     MNIST_trnlabel=[];
@@ -103,8 +105,35 @@ for j=[1 6 7 8 9 10]
 end
 
 perf_mean=mean(perf');
+figure;
 bar (perf_mean)
 set(gca,'XTick',[1:21]) 
 set(gca,'XTickLabel',{'beach', 'agricultural', 'buildings', 'forest', 'river', 'harbor', 'denseresi', 'sparseresi', 'freeway', 'airplane', 'baseball',...
     'chaparral', 'golfcourse', 'mobilehome', 'intersection', 'mediumresi', 'overpass', 'parkinglot', 'runway', 'storagetanks', 'tenniscourt'})
 
+% Visualise the results
+figure(2)
+while true
+    prompt = 'Enter query image number and class in format [im-no class].\n';
+    ui = input(prompt)
+    image = ui(1);
+    class = ui(2);
+    rank = find(ip_image_no==ui(1));
+    q_im_path = RES(rank).TESTIMAGE(class);
+    im_no=0;
+    close figure 2
+    figure(2);
+    while im_no<(size(RES(rank).RESULT,2)+1)
+        if im_no==0
+            subplot(15,7,im_no+1)
+            imshow(imread(q_im_path{1}))
+            xlabel('Query Image')
+        elseif size(RES(rank).RESULT{class,im_no},1)==0
+            im_no;
+        else
+            subplot(15,7,im_no+1)
+            imshow(imread(RES(rank).RESULT{class,im_no}))
+        end
+        im_no=im_no+1;
+    end
+end

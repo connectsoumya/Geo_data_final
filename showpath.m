@@ -7,9 +7,9 @@ elseif i==2
 elseif i==3
     A='C:/Users/SoumyaShubhraGhosh/Pictures/Images/buildings/buildings';
 elseif i==4
-    A='C:/Users/SoumyaShubhraGhosh/Pictures/Images/forest/forest%2.2d.tif';
+    A='C:/Users/SoumyaShubhraGhosh/Pictures/Images/forest/forest';
 elseif i==5
-    A='C:/Users/SoumyaShubhraGhosh/Pictures/Images/river/river%2.2d.tif';
+    A='C:/Users/SoumyaShubhraGhosh/Pictures/Images/river/river';
 elseif i==6
     A='C:/Users/SoumyaShubhraGhosh/Pictures/Images/harbor/harbor';
 elseif i==7
