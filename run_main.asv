@@ -107,4 +107,3 @@ bar (perf_mean)
 set(gca,'XTick',[1:21]) 
 set(gca,'XTickLabel',{'beach', 'agricultural', 'buildings', 'forest', 'river', 'harbor', 'denseresi', 'sparseresi', 'freeway', 'airplane', 'baseball',...
     'chaparral', 'golfcourse', 'mobilehome', 'intersection', 'mediumresi', 'overpass', 'parkinglot', 'runway', 'storagetanks', 'tenniscourt'})
-
