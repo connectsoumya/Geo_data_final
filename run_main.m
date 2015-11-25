@@ -45,12 +45,12 @@ for j = ip_image_no
     end
 
     C_tstlabel=mat2cell(MNIST_tstlabel, 1, repmat(1,21,1));
-    C_tstdata=mat2cell(MNIST_tstdata, repmat(1,21,1), 250);
+    C_tstdata=mat2cell(MNIST_tstdata, repmat(1,21,1), 500);
 
     path(path,'S3PLH');
     path(path,'SH');
 
-    nbits_set=[48];
+    nbits_set=[24];
     MNIST_vadd=MNIST_vaddata;
     MNIST_vadl=MNIST_vadlabel;
 

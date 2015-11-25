@@ -11,7 +11,7 @@ for i=1:size(RefSamplesSIFT,1)
 end
 
 % for i=1:size(RefSamplesSIFT,1)
-%     RefSamplesSIFT(i,:)=RefSamplesSIFT(i,:)./norm(RefSamplesSIFT(i,:));
+%     RefSamplesSIFT(i,:)=RefSamplesSIFT(i,:)./sum(RefSamplesSIFT(i,:));
 % end
 
 count=1;
@@ -45,12 +45,12 @@ for j = ip_image_no
     end
 
     C_tstlabel=mat2cell(MNIST_tstlabel, 1, repmat(1,21,1));
-    C_tstdata=mat2cell(MNIST_tstdata, repmat(1,21,1), 250);
+    C_tstdata=mat2cell(MNIST_tstdata, repmat(1,21,1), 150);
 
     path(path,'S3PLH');
     path(path,'SH');
 
-    nbits_set=[24 32 64];
+    nbits_set=[24];
     MNIST_vadd=MNIST_vaddata;
     MNIST_vadl=MNIST_vadlabel;
     
