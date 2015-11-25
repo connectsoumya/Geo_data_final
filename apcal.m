@@ -38,6 +38,10 @@ M(:,all(M==0,1))=[];
 % Recording the path
 if size(M,2)==0
     IMPATH.RESULT{labelvalue,1}={};
+% elseif size(M,2)<21
+%     msize = numel(M(1,:));
+%     idx = randperm(msize);
+%     dist = M(idx(1:20));
 else
     for i=1:size(M,2)
         imnum = mod(M(3,i),100)+1;

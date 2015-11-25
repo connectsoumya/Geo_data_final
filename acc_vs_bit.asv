@@ -16,7 +16,7 @@ end
 
 count=1;
 testim_no=1;
-ip_image_no = 6:4:100;%[41 56 67 78 89 90];
+ip_image_no = 6:5:100;%[41 56 67 78 89 90];
 for j = ip_image_no
     
     MNIST_trndata=[];
@@ -50,11 +50,12 @@ for j = ip_image_no
     path(path,'S3PLH');
     path(path,'SH');
 
-    nbits_set=[48];
+    nbits_set=[24 32 64 128 256];
     MNIST_vadd=MNIST_vaddata;
     MNIST_vadl=MNIST_vadlabel;
-
-    for i=1:21
+    
+    i_row = 1;
+    for i=[2 4 12]
         MNIST_tstdata=C_tstdata{i,1};
         MNIST_tstlabel=C_tstlabel{1,i};
 
@@ -86,17 +87,20 @@ for j = ip_image_no
                 end
             end
         end
-
+        i_cell=1;
         for ii=1:length(nbits_set)    
             nbits=nbits_set(ii);  
             SPLHparam.nbits=nbits;
             SPLHparam.eta=0.0683;
             [SPLH_eva_info{ii},IMPATH] = evaluate_SPLH_MNIST(MNIST_trndata,MNIST_trnlabel,MNIST_tstdata,MNIST_tstlabel,MNIST_vaddata,SR_M,SPLHparam,IMPATH);
             AP_SPLH(ii)=SPLH_eva_info{ii}.AP;
+            perf{i_cell}(i_row,count)=AP_SPLH(i_cell);
+            i_cell = i_cell+1;
         end
-        perf(i,count)=AP_SPLH; 
+        
         MNIST_vaddata=MNIST_vadd;
         MNIST_vadlabel=MNIST_vadl;
+        i_row=i_row+1;
     end
     count=count+1;
     clc;j
@@ -104,36 +108,10 @@ for j = ip_image_no
     testim_no=testim_no+1;
 end
 save RES RES
-perf_mean=mean(perf');
-figure;
-bar (perf_mean)
-set(gca,'XTick',[1:21]) 
-set(gca,'XTickLabel',{'beach', 'agricultural', 'buildings', 'forest', 'river', 'harbor', 'denseresi', 'sparseresi', 'freeway', 'airplane', 'baseball',...
-    'chaparral', 'golfcourse', 'mobilehome', 'intersection', 'mediumresi', 'overpass', 'parkinglot', 'runway', 'storagetanks', 'tenniscourt'})
-
-% % Visualise the results
-% figure(2)
-% while true
-%     prompt = 'Enter query image number and class in format [im-no class].\n';
-%     ui = input(prompt)
-%     image = ui(1);
-%     class = ui(2);
-%     rank = find(ip_image_no==ui(1));
-%     q_im_path = RES(rank).TESTIMAGE(class);
-%     im_no=0;
-%     close figure 2
-%     figure(2);
-%     while im_no<(size(RES(rank).RESULT,2)+1)
-%         if im_no==0
-%             subplot(15,7,im_no+1)
-%             imshow(imread(q_im_path{1}))
-%             xlabel('Query Image')
-%         elseif size(RES(rank).RESULT{class,im_no},1)==0
-%             im_no;
-%         else
-%             subplot(15,7,im_no+1)
-%             imshow(imread(RES(rank).RESULT{class,im_no}))
-%         end
-%         im_no=im_no+1;
-%     end
-% end
+for i=1:length(perf)
+    perf_mean=mean(perf{1}');
+    subplot(1,5,i)
+    bar (perf_mean)
+    set(gca,'XTick',[1:3]) 
+    set(gca,'XTickLabel',{'agricultural', 'forest', 'chaparral'})
+end
