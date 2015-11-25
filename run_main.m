@@ -5,18 +5,18 @@ load('RefSamplesLabelsSIFT.mat')
 
 format long
 
-for i=1:size(RefSamplesSIFT,1)
-    RefSamplesSIFT(i,:)=RefSamplesSIFT(i,:)./sum(RefSamplesSIFT(i,:));
-end
-% 
 X=mean(RefSamplesSIFT);
 for i=1:size(RefSamplesSIFT,1)
     RefSamplesSIFT(i,:)=RefSamplesSIFT(i,:)-X;
 end
 
+% for i=1:size(RefSamplesSIFT,1)
+%     RefSamplesSIFT(i,:)=RefSamplesSIFT(i,:)./norm(RefSamplesSIFT(i,:));
+% end
+
 count=1;
 testim_no=1;
-ip_image_no = 6:3:90;%[41 56 67 78 89 90];
+ip_image_no = 6:4:100;%[41 56 67 78 89 90];
 for j = ip_image_no
     
     MNIST_trndata=[];
